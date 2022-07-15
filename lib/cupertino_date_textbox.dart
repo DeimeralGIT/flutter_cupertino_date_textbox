@@ -58,7 +58,7 @@ class CupertinoDateTextBox extends StatefulWidget {
   _CupertinoDateTextBoxState createState() => new _CupertinoDateTextBoxState();
 }
 
-class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> {
+class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> with InputFieldTheme  {
   final double _kPickerSheetHeight = 250.0;
 
   DateTime? _currentDate;
