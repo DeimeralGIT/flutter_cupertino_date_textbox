@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:insurance_app/core/reusable_widgets/cw_text.dart';
+import 'package:insurance_app/core/utilities/autofill_hints_by_name.dart';
 
 import 'package:insurance_app/core/common/entities/base_text_field_entity.dart';
 import 'package:insurance_app/core/common/mixins/intput_field_theme.dart';
@@ -166,7 +167,6 @@ class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> {
                                 suffix: SizedBox(
                                   width: textFieldEntity.actionTitle.isNotEmpty ? widget.suffixButtonWidth + 15.4 * 2.5 : 0,
                                 ),
-                                hintText: focusNode.hasFocus ? widget.textFieldEntity.hintText : "",
                               ),
                           style: CWTextStyle(CWTextTypes.inputText, context),
                           autofillHints: (widget.textFieldEntity.isEnabled) ? autoFillHintsByName(widget.textFieldEntity.name) : null,
