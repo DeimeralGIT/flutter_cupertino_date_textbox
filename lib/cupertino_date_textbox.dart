@@ -3,6 +3,7 @@ library cupertino_date_textbox;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:insurance_app/core/reusable_widgets/cw_text.dart';
 
 class CupertinoDateTextBox extends StatefulWidget {
   /// A text box widget which displays a cupertino picker to select a date if clicked
@@ -148,10 +149,7 @@ class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> {
           ),
           child: new Text(
             fieldText,
-            style: TextStyle(
-              color: textColor,
-              fontSize: widget.fontSize,
-            ),
+            style: CWTextStyle(CWTextTypes.inputText, context),
           ),
         ),
       ),
