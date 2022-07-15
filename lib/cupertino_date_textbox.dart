@@ -163,11 +163,6 @@ class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> {
                               .applyDefaults(
                                 applyDecoration(widget.textFieldEntity.isEnabled, context, action: textFieldEntity.action, false),
                               )
-                              .copyWith(
-                                suffix: SizedBox(
-                                  width: textFieldEntity.actionTitle.isNotEmpty ? widget.suffixButtonWidth + 15.4 * 2.5 : 0,
-                                ),
-                              ),
                           style: CWTextStyle(CWTextTypes.inputText, context),
                           autofillHints: (widget.textFieldEntity.isEnabled) ? autoFillHintsByName(widget.textFieldEntity.name) : null,
                         ),
