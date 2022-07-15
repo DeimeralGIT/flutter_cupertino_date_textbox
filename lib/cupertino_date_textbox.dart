@@ -5,12 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:insurance_app/core/reusable_widgets/cw_text.dart';
 
+import 'package:insurance_app/core/common/entities/base_text_field_entity.dart';
+import 'package:insurance_app/core/common/mixins/intput_field_theme.dart';
+import 'package:insurance_app/core/utilities/cw_theme.dart';
+import 'package:insurance_app/core/utilities/input_control.dart';
+
 class CupertinoDateTextBox extends StatefulWidget {
   /// A text box widget which displays a cupertino picker to select a date if clicked
   CupertinoDateTextBox(
       {required this.initialValue,
       required this.onDateChange,
       required this.hintText,
+      required this.textFieldEntity,
       this.color = CupertinoColors.label,
       this.hintColor = CupertinoColors.inactiveGray,
       this.pickerBackgroundColor = CupertinoColors.systemBackground,
@@ -44,6 +50,8 @@ class CupertinoDateTextBox extends StatefulWidget {
 
   /// Specifies if the text box can be modified
   final bool enabled;
+  
+  final BaseTextFieldEntity textFieldEntity;
 
   @override
   _CupertinoDateTextBoxState createState() => new _CupertinoDateTextBoxState();
@@ -131,26 +139,38 @@ class _CupertinoDateTextBoxState extends State<CupertinoDateTextBox> {
                 // call callback
                 callCallback();
               },
-        child: new InputDecorator(
-          decoration: InputDecoration(
-            isDense: true,
-            hintText: hintText,
-            hintStyle: TextStyle(
-                color: CupertinoColors.inactiveGray, fontSize: widget.fontSize),
-            contentPadding: EdgeInsets.all(widget.textfieldPadding),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                borderSide: const BorderSide(
-                    color: CupertinoColors.inactiveGray, width: 0.0)),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                borderSide: const BorderSide(
-                    color: CupertinoColors.inactiveGray, width: 0.0)),
-          ),
-          child: new Text(
-            fieldText,
-            style: CWTextStyle(CWTextTypes.inputText, context),
-          ),
+        child: TextField(
+                          inputFormatters: [
+                            inputFormatters(widget.textFieldEntity.name, widget.textFieldEntity.keyboardInputType),
+                          ],
+                          enabled: widget.textFieldEntity.isEnabled,
+                          focusNode: focusNode,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          cursorColor: colorScheme.primaryTextColor,
+                          maxLength: widget.textFieldEntity.maxLength,
+                          onSubmitted: onSubmitAction,
+                          onChanged: onChangeAction,
+                          cursorHeight: 18,
+                          cursorWidth: 1,
+                          autocorrect: false,
+                          enableSuggestions: false,
+                          keyboardType: textInputType(widget.textFieldEntity.keyboardInputType),
+                          textInputAction: TextInputAction.next,
+                          controller: controller,
+                          obscureText: isObscure,
+                          decoration: getInputDecoration(context)
+                              .applyDefaults(
+                                applyDecoration(widget.textFieldEntity.isEnabled, context, action: textFieldEntity.action, false),
+                              )
+                              .copyWith(
+                                suffix: SizedBox(
+                                  width: textFieldEntity.actionTitle.isNotEmpty ? widget.suffixButtonWidth + 15.4 * 2.5 : 0,
+                                ),
+                                hintText: focusNode.hasFocus ? widget.textFieldEntity.hintText : "",
+                              ),
+                          style: CWTextStyle(CWTextTypes.inputText, context),
+                          autofillHints: (widget.textFieldEntity.isEnabled) ? autoFillHintsByName(widget.textFieldEntity.name) : null,
+                        ),
         ),
       ),
     );
